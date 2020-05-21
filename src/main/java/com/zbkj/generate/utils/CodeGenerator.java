@@ -62,10 +62,10 @@ public class CodeGenerator {
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://121.196.17.222:3306/crmeb_java?characterEncoding=utf-8&useSSL=false&serverTimeZone=GMT+8");
+        dsc.setUrl("jdbc:mysql://127.0.0.1:3306/test?characterEncoding=utf-8&useSSL=false&serverTimeZone=GMT+8");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
-        dsc.setUsername("crmeb_java");
-        dsc.setPassword("SDZeLrkZTkEyaXDr");
+        dsc.setUsername("root");
+        dsc.setPassword("root");
         mpg.setDataSource(dsc);
 
         // 包配置
