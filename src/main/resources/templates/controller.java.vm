@@ -1,0 +1,128 @@
+package ${package.Controller};
+
+import com.common.CommonPage;
+import com.common.CommonResult;
+import com.common.PageParamRequest;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
+import org.springframework.web.bind.annotation.*;
+import ${package.Service}.${table.serviceName};
+import ${package.Entity}.${table.entityName};
+
+
+/**
+ * $!{table.comment} 前端控制器
+ */
+@Slf4j
+@RestController
+@RequestMapping("api/admin/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else#end")
+@Api(tags = "$!{table.comment}") //配合swagger使用
+#if(${kotlin})
+
+class ${table.controllerName}#if(${superControllerClass}):${superControllerClass}()#end
+
+#else
+    #if(${superControllerClass})
+
+public class ${table.controllerName} extends ${superControllerClass}{
+    #else
+
+public class ${table.controllerName} {
+    #end
+
+    #set($serviceImplName=$table.serviceName.substring(0,1).toLowerCase()+$table.serviceName.substring(1))
+    #set($entityName=$table.entityName.substring(0,1).toLowerCase()+$table.entityName.substring(1))
+    @Autowired
+    private ${table.serviceName} ${serviceImplName};
+
+    /**
+     * 分页显示$!{table.comment}
+     * @param request 搜索条件
+     * @param pageParamRequest 分页参数
+     * @author ${author}
+     * @since ${date}
+     */
+    @ApiOperation(value = "分页列表") //配合swagger使用
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public CommonResult<CommonPage<${table.entityName}>>  getList(@Validated ${table.entityName}SearchRequest request, @Validated PageParamRequest pageParamRequest){
+        CommonPage<${table.entityName}> ${entityName}CommonPage = CommonPage.restPage(${serviceImplName}.getList(request, pageParamRequest));
+        return CommonResult.success(${entityName}CommonPage);
+    }
+
+    /**
+     * 新增${table.comment}
+     * @param ${entityName}Request 新增参数
+     * @author ${author}
+     * @since ${date}
+     */
+    @ApiOperation(value = "新增")
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public CommonResult<String> save(@Validated ${table.entityName}Request ${entityName}Request){
+        ${table.entityName} ${entityName} = new ${table.entityName}();
+        BeanUtils.copyProperties(${entityName}Request, ${entityName});
+
+        if(${serviceImplName}.save(${entityName})){
+            return CommonResult.success();
+        }else{
+            return CommonResult.failed();
+        }
+    }
+
+    /**
+     * 删除${table.comment}
+     * @param id Integer
+     * @author ${author}
+     * @since ${date}
+     */
+    @ApiOperation(value = "删除")
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    public CommonResult<String> delete(@RequestParam(value = "id") Integer id){
+        if(${serviceImplName}.removeById(id)){
+            return CommonResult.success();
+        }else{
+            return CommonResult.failed();
+        }
+    }
+
+    /**
+     * 修改${table.comment}
+     * @param id integer id
+     * @param ${entityName}Request 修改参数
+     * @author ${author}
+     * @since ${date}
+     */
+    @ApiOperation(value = "修改")
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public CommonResult<String> update(@RequestParam Integer id, @Validated ${table.entityName}Request ${entityName}Request){
+        ${table.entityName} ${entityName} = new ${table.entityName}();
+        BeanUtils.copyProperties(${entityName}Request, ${entityName});
+        ${entityName}.setId(id);
+
+        if(${serviceImplName}.updateById(${entityName})){
+            return CommonResult.success();
+        }else{
+            return CommonResult.failed();
+        }
+    }
+
+    /**
+     * 查询${table.comment}信息
+     * @param id Integer
+     * @author ${author}
+     * @since ${date}
+     */
+    @ApiOperation(value = "详情")
+    @RequestMapping(value = "/info", method = RequestMethod.GET)
+    public CommonResult<${table.entityName}> info(@RequestParam(value = "id") Integer id){
+        ${table.entityName} ${entityName} = ${serviceImplName}.getById(id);
+        return CommonResult.success(${entityName});
+   }
+}
+
+
+#end
+

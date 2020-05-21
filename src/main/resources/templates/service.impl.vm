@@ -1,0 +1,51 @@
+package ${package.Service}.impl;
+
+import com.common.PageParamRequest;
+import com.github.pagehelper.PageHelper;
+
+import ${package.Entity}.${table.entityName};
+import ${package.Mapper}.${table.entityName}Dao;
+import ${package.Service}.${table.entityName}Service;
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+/**
+* @author $author
+* @description ${table.entityName}ServiceImpl 接口实现
+* @date $date
+*/
+@Service
+public class ${table.entityName}ServiceImpl extends ServiceImpl<${table.mapperName}, ${table.entityName}> implements ${table.entityName}Service {
+
+    @Resource
+    private ${table.mapperName} dao;
+
+
+    /**
+    * 列表
+    * @param request 请求参数
+    * @param pageParamRequest 分页类参数
+    * @author $author
+    * @since $date
+    * @return List<${table.entityName}>
+    */
+    @Override
+    public List<${table.entityName}> getList(${table.entityName}SearchRequest request, PageParamRequest pageParamRequest) {
+        PageHelper.startPage(pageParamRequest.getPageNum(), pageParamRequest.getPageSize());
+
+        //带 ${table.entityName} 类的多条件查询
+        LambdaQueryWrapper<${table.entityName}> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        ${table.entityName} model = new ${table.entityName}();
+        BeanUtils.copyProperties(request, model);
+        lambdaQueryWrapper.setEntity(model);
+        return dao.selectList(lambdaQueryWrapper);
+    }
+
+}
+

@@ -1,0 +1,17 @@
+package ${package.Service};
+
+import com.common.PageParamRequest;
+import ${package.Entity}.${table.entityName};
+import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
+
+/**
+* @author $author
+* @description ${table.entityName}Service 接口
+* @date $date
+*/
+public interface ${table.entityName}Service extends IService<${table.entityName}> {
+
+    List<${table.entityName}> getList(${table.entityName}SearchRequest request, PageParamRequest pageParamRequest);
+}
