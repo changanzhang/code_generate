@@ -14,4 +14,7 @@ springboot + mybatis plus 生成 controller service serviceImpl model dao mapper
 5. service实现文件里建分页列表方法`getList`，具体参考user模块即可
 6. 模块目录下新建request文件夹，复制model文件2份到request 重命名为（UserRequest和UserSearchRequest），删除主键属性即可（不删除的话，在插入的时候要使用 saveOrUpdate方法，意味着如果id有值则更新，没有则插入）
 
+#联系方式
+qq 419641032
+微信 web_php
 
