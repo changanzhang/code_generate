@@ -16,5 +16,5 @@ springboot + mybatis plus 生成 controller service serviceImpl model dao mapper
 
 #联系方式
 qq 419641032
-微信 web_php
+微信 shmilylez
 
